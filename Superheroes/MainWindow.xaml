@@ -1,0 +1,174 @@
+﻿<Window x:Class="Superheroes.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Superheroes"
+        mc:Ignorable="d"
+        Title="Superhéroes"
+        MinHeight="700"
+        MinWidth="1000"
+        Height="700"
+        Width="1000"
+        Icon="images/shield.ico">
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Width"
+                    Value="100" />
+            <Setter Property="Margin"
+                    Value="5" />
+        </Style>
+        <Style TargetType="Border"
+               x:Key="radiocheckBorder">
+            <Setter Property="BorderBrush"
+                    Value="Black" />
+            <Setter Property="BorderThickness"
+                    Value="1" />
+            <Setter Property="Background"
+                    Value="White" />
+        </Style>
+        <Style TargetType="Border"
+               x:Key="checkBorder"
+               BasedOn="{StaticResource radiocheckBorder}">
+            <Setter Property="Margin"
+                    Value="0,15,5,15" />
+        </Style>
+        <Style TargetType="Border"
+               x:Key="radioBorder"
+               BasedOn="{StaticResource radiocheckBorder}">
+            <Setter Property="Margin"
+                    Value="5,15,0,15" />
+            <Setter Property="Grid.Column"
+                    Value="1" />
+        </Style>
+        <Style TargetType="Border"
+               x:Key="shadowCheckBorder"
+               BasedOn="{StaticResource checkBorder}">
+            <Setter Property="Background"
+                    Value="Black" />
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect />
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="Border"
+               x:Key="shadowRadioBorder"
+               BasedOn="{StaticResource radioBorder}">
+            <Setter Property="Background"
+                    Value="Black" />
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect />
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="StackPanel" x:Key="radioCheckStackPanel">
+            <Setter Property="Margin"
+                    Value="5" />
+        </Style>
+    </Window.Resources>
+    <Grid Background="LightBlue">
+        <TabControl Margin="10">
+            <TabItem Header="Ver superhéroes">
+                <DockPanel Margin="1" Background="PaleGreen">
+                    <DockPanel DockPanel.Dock="Top"
+                               LastChildFill="False"
+                               Margin="10,5,10,5">
+                        <TextBlock DockPanel.Dock="Left"
+                                   FontSize="36"
+                                   VerticalAlignment="Center"
+                                   Foreground="White"
+                                   FontFamily="Impact">
+                            <TextBlock.Effect>
+                                <DropShadowEffect />
+                            </TextBlock.Effect>Kermit</TextBlock>
+                        <StackPanel  DockPanel.Dock="Right" Orientation="Horizontal">
+                            <Image Width="40"
+                                   Source="images/avengers.png" />
+                            <Image Width="60"
+                                   Source="images/xmen.png" />
+                        </StackPanel>
+                    </DockPanel>
+                    <StackPanel Margin="5"
+                                HorizontalAlignment="Center"
+                                Orientation="Horizontal"
+                                DockPanel.Dock="Bottom">
+                        <Image Width="25"
+                               Source="images/arrow.png" />
+                        <TextBlock FontSize="20" FontWeight="Bold" Margin="5,0,5,0">1/3</TextBlock>
+                        <Image Width="25"
+                               Source="images/arrow.png"
+                               RenderTransformOrigin="0.5,0.5">
+                            <Image.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform />
+                                    <SkewTransform />
+                                    <RotateTransform Angle="180" />
+                                    <TranslateTransform />
+                                </TransformGroup>
+                            </Image.RenderTransform>
+                        </Image>
+                    </StackPanel>
+                    <Image Stretch="Fill"
+                           Margin="10"
+                           Source="https://i.ytimg.com/vi/prHkR4mad7A/hqdefault.jpg" />
+                </DockPanel>
+            </TabItem>
+            <TabItem Header="Nuevo superhéroe">
+                <Grid Margin="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock FontSize="14">Nombre del superhéroe</TextBlock>
+                            <Image Width="20"
+                                   Source="images/info.png"
+                                   ToolTip="Nombre del superhéroe en inglés" />
+                        </StackPanel>
+                        <TextBox></TextBox>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Margin="0,5,0,0" FontSize="14">Imagen</TextBlock>
+                            <Image Width="20"
+                                   Source="images/info.png" ToolTip="Imagen del superhéroe en formato comic" />
+                        </StackPanel>
+                        <TextBox></TextBox>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Border Style="{StaticResource shadowCheckBorder}">
+                            </Border>
+                            <Border Style="{StaticResource checkBorder}">
+                                <StackPanel Style="{StaticResource radioCheckStackPanel}">
+                                    <RadioButton IsChecked="True" GroupName="tipoPersonaje">Heroe</RadioButton>
+                                    <RadioButton GroupName="tipoPersonaje">Villano</RadioButton>
+                                </StackPanel>
+                            </Border>
+                            <Border Style="{StaticResource shadowRadioBorder}">
+                            </Border>
+                            <Border Style="{StaticResource radioBorder}">
+                                <StackPanel Style="{StaticResource radioCheckStackPanel}">
+                                    <CheckBox>Vengadores</CheckBox>
+                                    <CheckBox>X-men</CheckBox>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                            <Button>Aceptar</Button>
+                            <Button>Limpiar</Button>
+                        </StackPanel>
+                    </StackPanel>
+                    <Border Grid.Column="1" Background="NavajoWhite" Margin="10" BorderBrush="Black" BorderThickness="3" CornerRadius="3">
+                        <StackPanel VerticalAlignment="Center"  Background="NavajoWhite">
+                            <Image Source="https://img1.looper.com/img/gallery/kermit-the-frogs-history-explained/intro-1601411424.jpg" />
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>
