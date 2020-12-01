@@ -12,6 +12,9 @@
         Width="1000"
         Icon="images/shield.ico">
     <Window.Resources>
+        <local:BackgroundConverter x:Key="backgroundConversor"></local:BackgroundConverter>
+        <local:IconoConverter x:Key="iconoConversor"></local:IconoConverter>
+        <local:Superheroe x:Key="nuevoSuperheroe"></local:Superheroe>
         <Style TargetType="Button">
             <Setter Property="Width"
                     Value="100" />
@@ -32,6 +35,11 @@
                BasedOn="{StaticResource radiocheckBorder}">
             <Setter Property="Margin"
                     Value="0,15,5,15" />
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect />
+                </Setter.Value>
+            </Setter>
         </Style>
         <Style TargetType="Border"
                x:Key="radioBorder"
@@ -40,38 +48,31 @@
                     Value="5,15,0,15" />
             <Setter Property="Grid.Column"
                     Value="1" />
-        </Style>
-        <Style TargetType="Border"
-               x:Key="shadowCheckBorder"
-               BasedOn="{StaticResource checkBorder}">
-            <Setter Property="Background"
-                    Value="Black" />
             <Setter Property="Effect">
                 <Setter.Value>
                     <DropShadowEffect />
                 </Setter.Value>
             </Setter>
         </Style>
-        <Style TargetType="Border"
-               x:Key="shadowRadioBorder"
-               BasedOn="{StaticResource radioBorder}">
-            <Setter Property="Background"
-                    Value="Black" />
-            <Setter Property="Effect">
-                <Setter.Value>
-                    <DropShadowEffect />
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style TargetType="StackPanel" x:Key="radioCheckStackPanel">
+        <Style TargetType="StackPanel"
+               x:Key="radioCheckStackPanel">
             <Setter Property="Margin"
                     Value="5" />
+        </Style>
+        <Style TargetType="Image"
+               x:Key="flechaImage">
+            <Setter Property="Width"
+                    Value="25" />
+            <Setter Property="Source"
+                    Value="images/arrow.png" />
+            <EventSetter Event="MouseLeftButtonUp"
+                         Handler="Image_MouseLeftButtonUp" />
         </Style>
     </Window.Resources>
     <Grid Background="LightBlue">
         <TabControl Margin="10">
             <TabItem Header="Ver superhéroes">
-                <DockPanel Margin="1" Background="PaleGreen">
+                <DockPanel Margin="1" Background="{Binding Path=Heroe,Converter={StaticResource backgroundConversor}}">
                     <DockPanel DockPanel.Dock="Top"
                                LastChildFill="False"
                                Margin="10,5,10,5">
@@ -79,26 +80,29 @@
                                    FontSize="36"
                                    VerticalAlignment="Center"
                                    Foreground="White"
-                                   FontFamily="Impact">
+                                   FontFamily="Impact"
+                                   Text="{Binding Path=Nombre}">
                             <TextBlock.Effect>
                                 <DropShadowEffect />
-                            </TextBlock.Effect>Kermit</TextBlock>
-                        <StackPanel  DockPanel.Dock="Right" Orientation="Horizontal">
+                            </TextBlock.Effect></TextBlock>
+                        <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
                             <Image Width="40"
-                                   Source="images/avengers.png" />
+                                   Source="images/avengers.png"
+                                   Visibility="{Binding Path=Vengador, Converter={StaticResource iconoConversor}}"/>
                             <Image Width="60"
-                                   Source="images/xmen.png" />
+                                   Source="images/xmen.png"
+                                   Visibility="{Binding Path=Xmen, Converter={StaticResource iconoConversor}}" />
                         </StackPanel>
                     </DockPanel>
                     <StackPanel Margin="5"
                                 HorizontalAlignment="Center"
                                 Orientation="Horizontal"
                                 DockPanel.Dock="Bottom">
-                        <Image Width="25"
-                               Source="images/arrow.png" />
-                        <TextBlock FontSize="20" FontWeight="Bold" Margin="5,0,5,0">1/3</TextBlock>
-                        <Image Width="25"
-                               Source="images/arrow.png"
+                        <Image Style="{StaticResource flechaImage}"
+                               Tag="-1"/>
+                        <TextBlock x:Name="numeroImagenes" FontSize="20" FontWeight="Bold" Margin="5,0,5,0">1/3</TextBlock>
+                        <Image Style="{StaticResource flechaImage}"
+                               Tag="1"
                                RenderTransformOrigin="0.5,0.5">
                             <Image.RenderTransform>
                                 <TransformGroup>
@@ -112,7 +116,7 @@
                     </StackPanel>
                     <Image Stretch="Fill"
                            Margin="10"
-                           Source="https://i.ytimg.com/vi/prHkR4mad7A/hqdefault.jpg" />
+                           Source="{Binding Path=Imagen}" />
                 </DockPanel>
             </TabItem>
             <TabItem Header="Nuevo superhéroe">
@@ -121,50 +125,54 @@
                         <ColumnDefinition></ColumnDefinition>
                         <ColumnDefinition></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <StackPanel>
+                    <StackPanel x:Name="nuevoSuperheroeStackPanel" DataContext="{DynamicResource nuevoSuperheroe}">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock FontSize="14">Nombre del superhéroe</TextBlock>
                             <Image Width="20"
                                    Source="images/info.png"
                                    ToolTip="Nombre del superhéroe en inglés" />
                         </StackPanel>
-                        <TextBox></TextBox>
+                        <TextBox x:Name="nombreTextBox" Text="{Binding Path=Nombre}"></TextBox>
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Margin="0,5,0,0" FontSize="14">Imagen</TextBlock>
                             <Image Width="20"
                                    Source="images/info.png" ToolTip="Imagen del superhéroe en formato comic" />
                         </StackPanel>
-                        <TextBox></TextBox>
+                        <TextBox x:Name="urlImageTextBox" Text="{Binding Path=Imagen}"></TextBox>
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition></ColumnDefinition>
                                 <ColumnDefinition></ColumnDefinition>
                             </Grid.ColumnDefinitions>
-                            <Border Style="{StaticResource shadowCheckBorder}">
-                            </Border>
                             <Border Style="{StaticResource checkBorder}">
                                 <StackPanel Style="{StaticResource radioCheckStackPanel}">
-                                    <RadioButton IsChecked="True" GroupName="tipoPersonaje">Heroe</RadioButton>
-                                    <RadioButton GroupName="tipoPersonaje">Villano</RadioButton>
+                                    <RadioButton IsChecked="{Binding Path=Heroe}"
+                                                 x:Name="heroeRadioButton"
+                                                 GroupName="tipoPersonaje">Heroe</RadioButton>
+                                    <RadioButton IsChecked="{Binding Path=Villano}"
+                                                 Checked="villanoRadioButton_Checked"
+                                                 x:Name="villanoRadioButton"
+                                                 GroupName="tipoPersonaje">Villano</RadioButton>
                                 </StackPanel>
-                            </Border>
-                            <Border Style="{StaticResource shadowRadioBorder}">
                             </Border>
                             <Border Style="{StaticResource radioBorder}">
                                 <StackPanel Style="{StaticResource radioCheckStackPanel}">
-                                    <CheckBox>Vengadores</CheckBox>
-                                    <CheckBox>X-men</CheckBox>
+                                    <CheckBox x:Name="vengadorCheckBox" IsChecked="{Binding Path=Vengador}" 
+                                              IsEnabled="{Binding ElementName=heroeRadioButton, Path=IsChecked}">Vengadores</CheckBox>
+                                    <CheckBox x:Name="xmenCheckBox"
+                                              IsChecked="{Binding Path=Xmen}"
+                                              IsEnabled="{Binding ElementName=heroeRadioButton, Path=IsChecked}">X-men</CheckBox>
                                 </StackPanel>
                             </Border>
                         </Grid>
                         <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                            <Button>Aceptar</Button>
-                            <Button>Limpiar</Button>
+                            <Button Click="AceptarButton_Click">Aceptar</Button>
+                            <Button Click="LimpiarButton_Click">Limpiar</Button>
                         </StackPanel>
                     </StackPanel>
                     <Border Grid.Column="1" Background="NavajoWhite" Margin="10" BorderBrush="Black" BorderThickness="3" CornerRadius="3">
                         <StackPanel VerticalAlignment="Center"  Background="NavajoWhite">
-                            <Image Source="https://img1.looper.com/img/gallery/kermit-the-frogs-history-explained/intro-1601411424.jpg" />
+                            <Image Source="{Binding ElementName=urlImageTextBox ,Path=Text}" />
                         </StackPanel>
                     </Border>
                 </Grid>

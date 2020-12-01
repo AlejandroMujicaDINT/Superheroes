@@ -1,121 +1,124 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 
-class Superheroe : INotifyPropertyChanged
+namespace Superheroes
 {
-    private string nombre;
-    private string imagen;
-    private bool vengador;
-    private bool xmen;
-    private bool heroe;
-    private bool villano;
-
-    public string Nombre
+    class Superheroe : INotifyPropertyChanged
     {
-        get => nombre;
-        set
+        private string nombre;
+        private string imagen;
+        private bool vengador;
+        private bool xmen;
+        private bool heroe;
+        private bool villano;
+
+        public string Nombre
         {
-            if (nombre != value)
+            get => nombre;
+            set
             {
-                nombre = value;
-                NotifyPropetyChanged("Nombre");
+                if (nombre != value)
+                {
+                    nombre = value;
+                    NotifyPropetyChanged("Nombre");
+                }
             }
         }
-    }
-    public string Imagen
-    {
-        get => imagen;
-        set
+        public string Imagen
         {
-            if (imagen != value)
+            get => imagen;
+            set
             {
-                imagen = value;
-                NotifyPropetyChanged("Imagen");
+                if (imagen != value)
+                {
+                    imagen = value;
+                    NotifyPropetyChanged("Imagen");
+                }
             }
         }
-    }
-    public bool Vengador
-    {
-        get => vengador;
-        set
+        public bool Vengador
         {
-            if (vengador != value)
+            get => vengador;
+            set
             {
-                vengador = value;
-                NotifyPropetyChanged("Vengador");
+                if (vengador != value)
+                {
+                    vengador = value;
+                    NotifyPropetyChanged("Vengador");
+                }
             }
         }
-    }
-    public bool Xmen
-    {
-        get => xmen;
-        set
+        public bool Xmen
         {
-            if (xmen != value)
+            get => xmen;
+            set
             {
-                xmen = value;
-                NotifyPropetyChanged("Xmen");
+                if (xmen != value)
+                {
+                    xmen = value;
+                    NotifyPropetyChanged("Xmen");
+                }
             }
         }
-    }
-    public bool Heroe
-    {
-        get => heroe;
-        set
+        public bool Heroe
         {
-            if (heroe != value)
+            get => heroe;
+            set
             {
-                heroe = value;
-                NotifyPropetyChanged("Heroe");
+                if (heroe != value)
+                {
+                    heroe = value;
+                    NotifyPropetyChanged("Heroe");
+                }
             }
         }
-    }
-    public bool Villano 
-    { 
-        get => villano; 
-        set
+        public bool Villano
         {
-            if (villano != value)
+            get => villano;
+            set
             {
-                villano = value;
-                NotifyPropetyChanged("Villano");
+                if (villano != value)
+                {
+                    villano = value;
+                    NotifyPropetyChanged("Villano");
+                }
             }
         }
-    }
 
-    public Superheroe()
-    {
-    }
+        public Superheroe()
+        {
+        }
 
-    public Superheroe(string nombre, string imagen, bool vengador, bool xmen, bool heroe, bool villano)
-    {
-        Nombre = nombre;
-        Imagen = imagen;
-        Vengador = vengador;
-        Xmen = xmen;
-        Heroe = heroe;
-        Villano = villano;
-    }
+        public Superheroe(string nombre, string imagen, bool vengador, bool xmen, bool heroe, bool villano)
+        {
+            Nombre = nombre;
+            Imagen = imagen;
+            Vengador = vengador;
+            Xmen = xmen;
+            Heroe = heroe;
+            Villano = villano;
+        }
 
-    public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler PropertyChanged;
 
-    public void NotifyPropetyChanged(string propertyName)
-    {
-        this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-    }
+        public void NotifyPropetyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
 
-    public static List<Superheroe> GetSamples()
-    {
-        List<Superheroe> ejemplos = new List<Superheroe>();
+        public static List<Superheroe> GetSamples()
+        {
+            List<Superheroe> ejemplos = new List<Superheroe>();
 
-        Superheroe ironman = new Superheroe("Ironman", @"https://sm.ign.com/ign_latam/screenshot/default/ybbpqktez5whedr0-1592031889_31aa.jpg", true, false, true, false);
-        Superheroe kingpin = new Superheroe("Kingpin", @"https://www.comicbasics.com/wp-content/uploads/2017/09/Kingpin.jpg", false, false, false, true);
-        Superheroe spiderman = new Superheroe("Spiderman", @"https://wipy.tv/wp-content/uploads/2019/08/destino-de-%E2%80%98Spider-Man%E2%80%99-en-los-Comics.jpg", true, true, true, false);
+            Superheroe ironman = new Superheroe("Ironman", @"https://sm.ign.com/ign_latam/screenshot/default/ybbpqktez5whedr0-1592031889_31aa.jpg", true, false, true, false);
+            Superheroe kingpin = new Superheroe("Kingpin", @"https://www.comicbasics.com/wp-content/uploads/2017/09/Kingpin.jpg", false, false, false, true);
+            Superheroe spiderman = new Superheroe("Spiderman", @"https://wipy.tv/wp-content/uploads/2019/08/destino-de-%E2%80%98Spider-Man%E2%80%99-en-los-Comics.jpg", true, true, true, false);
 
-        ejemplos.Add(ironman);
-        ejemplos.Add(kingpin);
-        ejemplos.Add(spiderman);
+            ejemplos.Add(ironman);
+            ejemplos.Add(kingpin);
+            ejemplos.Add(spiderman);
 
-        return ejemplos;
+            return ejemplos;
+        }
     }
 }
